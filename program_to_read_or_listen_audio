@@ -1,0 +1,82 @@
+import  speech_recognition as sr
+
+
+def audiofile_to_read():
+    rec = sr.Recognizer()
+    print("Please give audio file path you want to read")
+    file = input()
+    with sr.AudioFile(file) as source:
+        audio = rec.record(source)
+
+        try:
+            output_text = rec.recognize_google(audio)
+            print("converting")
+            print("Do you want to save the file or just show it on screen\n"
+                "1.Save\n"
+                "2.show on screen")
+            choice = int(input())
+            if choice == 1:
+                print("enter file name in .txt format")
+                name = input()
+                with open(name,'w') as file:
+                    file.write(output_text)
+            else:
+                print("showing the content you asked for")
+                print(output_text)
+
+        except:
+            print("sorry run again")
+
+
+
+def listen_to_audio():
+    rec = sr.Recognizer()
+    print("Select microphone")
+    mic = sr.Microphone.list_microphone_names()
+    for m in enumerate(mic):
+        print(m)
+    num = int(input())
+    with sr.Microphone(device_index=num) as source:
+        audio = rec.listen(source)
+
+        try:
+            text = rec.listen(rec.recognize_google(audio))
+            print("listening")
+            print("Do you want to save the file or just show it on screen\n"
+                  "1.Save\n"
+                  "2.show on screen")
+            if choice == 1:
+                print("enter file name in .txt format")
+                name = input()
+                with open(name,'w') as file:
+                    file.write(text)
+            else:
+                print("showing the content you asked for")
+                print(text)
+
+
+
+        except:
+            print("Could not understand what you said")
+
+
+
+welcome =("Hello there what would you like to do today\n "
+        "1.Convert audio file to text or \n"
+          "2.Convert what you said into text\n"
+          "3.To quit\n"
+          )
+
+choice = ' '
+while True:
+    print(welcome)
+    choice = int(input())
+    if choice == 1:
+        audiofile_to_read()
+    elif choice == 2:
+        listen_to_audio()
+    elif choice == 3:
+        print("Thank you")
+        break
+    else:
+        print("please enter a correct option")
