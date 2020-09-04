@@ -35,6 +35,7 @@ def listen_to_audio():
     mic = sr.Microphone.list_microphone_names()
     for m in enumerate(mic):
         print(m)
+    print("Input the microphone number you want to use ")
     num = int(input())
     with sr.Microphone(device_index=num) as source:
         audio = rec.listen(source)
